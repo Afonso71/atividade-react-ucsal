@@ -1,26 +1,24 @@
 import React from 'react';
 
-export default function ProgressBar({ progress, label }) {
-  const safeProgress = Math.min(100, Math.max(0, progress));
+export default function ProgressBar({ progress, label, unitCode }) {
+  const safeVal = Math.min(100, Math.max(0, progress));
 
   return (
-    <div className="progress-wrapper">
-      <div className="progress-header">
-        <span className="progress-label">{label}</span>
-        <span className="progress-percentage">{safeProgress}%</span>
+    <div className="rpm-meter">
+      <div className="rpm-header">
+        <span className="rpm-code">{unitCode}</span>
+        <span className="rpm-label">{label}</span>
+        <span className="rpm-val">{safeVal}%</span>
       </div>
       <div
-        className="progress-track"
+        className="rpm-track"
         role="progressbar"
-        aria-valuenow={safeProgress}
+        aria-valuenow={safeVal}
         aria-valuemin="0"
         aria-valuemax="100"
         aria-label={label}
       >
-        <div
-          className="progress-fill"
-          style={{ width: `${safeProgress}%` }}
-        />
+        <div className="rpm-fill" style={{ width: `${safeVal}%` }} />
       </div>
     </div>
   );

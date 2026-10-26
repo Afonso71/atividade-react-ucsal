@@ -1,3 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+:root {
+  --manila-paper: #EFECE6;
+  --grease-black: #141413;
+  --caliper-red: #D9381E;
+  --font-chassis: 'Big Shoulders Display', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -5,389 +15,680 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
-  background-color: #f4f6f9;
-  color: #1e293b;
+  background-color: var(--manila-paper);
+  color: var(--grease-black);
+  font-family: var(--font-mono);
   line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
 }
 
-.app-layout {
-  max-width: 1200px;
+/* Malha Principal de 12 Colunas */
+.workshop-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  min-height: 100vh;
+  max-width: 1440px;
   margin: 0 auto;
-  padding: 1.5rem;
+  border-left: 2px solid var(--grease-black);
+  border-right: 2px solid var(--grease-black);
 }
 
-/* Header Responsivo */
-.app-header {
+/* Coluna Lateral Esquerda de Telemetria (4 colunas) */
+.telemetry-sidebar {
+  grid-column: span 4;
+  border-right: 2px solid var(--grease-black);
+  padding: 2.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.25rem;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.serial-stamp {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--caliper-red);
+  margin-bottom: 0.75rem;
+}
+
+.garage-title {
+  font-family: var(--font-chassis);
+  font-weight: 800;
+  font-size: 3.8rem;
+  line-height: 0.9;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.garage-desc {
+  font-size: 0.84rem;
+  line-height: 1.6;
+}
+
+.bench-module {
+  border-top: 2px solid var(--grease-black);
+  padding-top: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.module-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: var(--caliper-red);
+  text-transform: uppercase;
+  display: block;
+}
+
+.garage-footer {
+  margin-top: auto;
+  border-top: 2px solid var(--grease-black);
+  padding-top: 1rem;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 1rem;
-  background-color: #ffffff;
-  padding: 1.5rem;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-  margin-bottom: 1.5rem;
+  font-size: 0.72rem;
+  font-weight: 600;
 }
 
-.app-header h1 {
-  font-size: 1.4rem;
-  color: #0f172a;
+/* Palco Direito Principal (8 colunas) */
+.workbench-main {
+  grid-column: span 8;
+  display: flex;
+  flex-direction: column;
 }
 
-.app-header p {
-  font-size: 0.9rem;
-  color: #64748b;
+/* Foto do Cofre do Motor com Sobreposição */
+.engine-bay-hero {
+  position: relative;
+  padding: 2.25rem;
+  border-bottom: 2px solid var(--grease-black);
 }
 
-/* Grid Principal Responsivo */
-.app-grid {
+.bay-photo-wrapper {
+  width: 80%;
+  height: 330px;
+  border: 2px solid var(--grease-black);
+  overflow: hidden;
+  background-color: var(--grease-black);
+}
+
+.bay-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(100%) contrast(130%);
+  display: block;
+}
+
+.spec-tag-overlap {
+  position: absolute;
+  right: 2.25rem;
+  bottom: 1.25rem;
+  width: 330px;
+  background-color: var(--manila-paper);
+  border: 2px solid var(--grease-black);
+  padding: 1.15rem;
+}
+
+.tag-number {
+  font-family: var(--font-chassis);
+  font-weight: 800;
+  font-size: 2.2rem;
+  line-height: 1;
+  color: var(--caliper-red);
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+.tag-copy {
+  font-size: 0.75rem;
+  line-height: 1.45;
+}
+
+/* Linha Assimétrica (5 colunas + 3 colunas) */
+.asymmetric-row {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(8, 1fr);
+  border-bottom: 2px solid var(--grease-black);
+}
+
+.cell-5col {
+  grid-column: span 5;
+  border-right: 2px solid var(--grease-black);
+}
+
+.cell-3col {
+  grid-column: span 3;
+}
+
+.work-cell {
+  padding: 2.25rem;
+  border-bottom: 2px solid var(--grease-black);
+  display: flex;
+  flex-direction: column;
   gap: 1.5rem;
 }
 
-.card {
-  background: #ffffff;
-  padding: 1.5rem;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+.asymmetric-row .work-cell {
+  border-bottom: none;
+}
+
+.cell-heading {
   display: flex;
-  flex-direction: column;
+  align-items: baseline;
   gap: 1rem;
 }
 
-.card-full {
-  grid-column: span 2;
+.giant-num {
+  font-family: var(--font-chassis);
+  font-weight: 800;
+  font-size: 3.6rem;
+  line-height: 0.85;
+  color: var(--grease-black);
 }
 
-.card h2 {
-  font-size: 1.15rem;
-  color: #1e293b;
-  border-bottom: 1px solid #e2e8f0;
-  padding-bottom: 0.5rem;
+.cell-heading h2 {
+  font-family: var(--font-chassis);
+  font-weight: 800;
+  font-size: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
 }
 
-.card-desc {
-  font-size: 0.9rem;
-  color: #475569;
+.sensor-intro {
+  font-size: 0.82rem;
+  line-height: 1.5;
 }
 
-/* Botões Padrão */
-.button-group {
-  display: flex;
-  flex-wrap: wrap;
+/* Botões Secos de Bancada */
+.dyno-controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.2fr;
   gap: 0.5rem;
 }
 
-.btn {
-  padding: 0.55rem 1rem;
-  border: none;
-  border-radius: 6px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: opacity 0.2s;
-}
-
-.btn:hover {
-  opacity: 0.9;
-}
-
-.btn-primary { background-color: #2563eb; color: #fff; }
-.btn-secondary { background-color: #64748b; color: #fff; }
-.btn-success { background-color: #16a34a; color: #fff; }
-.btn-danger { background-color: #dc2626; color: #fff; }
-
-/* 1. Acordeão */
-.accordion {
+.sensor-triggers {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.6rem;
+  margin-top: auto;
 }
 
-.accordion-item {
-  border: 1px solid #e2e8f0;
-  border-radius: 6px;
-  overflow: hidden;
-}
-
-.accordion-header {
-  width: 100%;
-  background: #f8fafc;
-  border: none;
-  padding: 1rem;
-  text-align: left;
+.mech-btn {
+  background-color: transparent;
+  color: var(--grease-black);
+  border: 2px solid var(--grease-black);
+  padding: 0.65rem 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
   font-weight: 600;
-  font-size: 0.95rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   cursor: pointer;
-  color: #1e293b;
+  text-align: left;
+  transition: background-color 0.12s ease, color 0.12s ease;
 }
 
-.accordion-header.active {
-  background: #eff6ff;
-  color: #2563eb;
+.mech-btn:hover {
+  background-color: var(--grease-black);
+  color: var(--manila-paper);
 }
 
-.accordion-body {
+.mech-btn-redline {
+  border-color: var(--caliper-red);
+  color: var(--caliper-red);
+}
+
+.mech-btn-redline:hover {
+  background-color: var(--caliper-red);
+  color: var(--manila-paper);
+}
+
+/* 1. Acordeão (Manual de Torque) */
+.torque-accordion {
+  border-top: 2px solid var(--grease-black);
+}
+
+.acc-item {
+  border-bottom: 2px solid var(--grease-black);
+}
+
+.acc-header {
+  width: 100%;
+  background: transparent;
+  border: none;
+  padding: 1.1rem 0;
+  display: grid;
+  grid-template-columns: 45px 1fr auto;
+  align-items: center;
+  text-align: left;
+  cursor: pointer;
+  font-family: var(--font-mono);
+  color: var(--grease-black);
+}
+
+.acc-step {
+  font-family: var(--font-chassis);
+  font-weight: 800;
+  font-size: 1.4rem;
+  color: var(--caliper-red);
+}
+
+.acc-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.acc-state {
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.acc-panel {
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.3s ease;
 }
 
-.accordion-body.open {
-  max-height: 200px;
+.acc-item.is-expanded .acc-panel {
+  max-height: 220px;
 }
 
-.accordion-content {
-  padding: 1rem;
-  border-top: 1px solid #e2e8f0;
-  color: #475569;
-  font-size: 0.95rem;
+.acc-panel-inner {
+  padding: 0 0 1.25rem 45px;
+  font-size: 0.85rem;
+  max-width: 65ch;
 }
 
-/* 2. Paginação */
-.module-list {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+/* 2. Paginação (Ordens de Serviço) */
+.os-table {
+  border-top: 2px solid var(--grease-black);
 }
 
-.module-item {
-  display: flex;
-  justify-content: space-between;
+.os-row {
+  display: grid;
+  grid-template-columns: 85px 1fr auto;
   align-items: center;
-  padding: 0.75rem;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 6px;
-  font-size: 0.9rem;
+  gap: 1rem;
+  padding: 1.1rem 0;
+  border-bottom: 2px solid var(--grease-black);
 }
 
-.badge {
-  background: #e2e8f0;
-  padding: 0.2rem 0.6rem;
-  border-radius: 12px;
-  font-size: 0.75rem;
+.os-code {
+  font-family: var(--font-chassis);
+  font-weight: 800;
+  font-size: 1.35rem;
+  color: var(--caliper-red);
+}
+
+.os-info h3 {
+  font-size: 0.92rem;
   font-weight: 600;
+  margin-bottom: 0.2rem;
 }
 
-.pagination {
+.os-info span {
+  font-size: 0.75rem;
+}
+
+.os-badge {
+  font-size: 0.72rem;
+  font-weight: 600;
+  border: 2px solid var(--grease-black);
+  padding: 0.25rem 0.6rem;
+}
+
+.service-pagination {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-top: auto;
+  padding-top: 0.5rem;
 }
 
-.pagination-numbers {
+.page-numbers {
   display: flex;
-  gap: 0.35rem;
+  gap: 0.4rem;
 }
 
-.pagination-btn,
-.pagination-number {
+.page-ctrl,
+.page-num-btn {
+  background: transparent;
+  border: 2px solid var(--grease-black);
+  color: var(--grease-black);
   padding: 0.45rem 0.8rem;
-  border: 1px solid #cbd5e1;
-  background: #fff;
-  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-weight: 600;
   cursor: pointer;
-  font-weight: 500;
 }
 
-.pagination-number.active {
-  background: #2563eb;
-  color: #fff;
-  border-color: #2563eb;
+.page-num-btn.is-active {
+  background-color: var(--grease-black);
+  color: var(--manila-paper);
 }
 
-.pagination-btn:disabled {
-  background: #f1f5f9;
-  color: #94a3b8;
+.page-ctrl:disabled {
+  opacity: 0.3;
   cursor: not-allowed;
 }
 
-/* 3. Barra de Progresso */
-.progress-wrapper {
+/* 3. Barra de Progresso (Dinamômetro) */
+.rpm-meter {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.45rem;
 }
 
-.progress-header {
+.rpm-header {
   display: flex;
   justify-content: space-between;
-  font-size: 0.9rem;
-  font-weight: 600;
+  align-items: baseline;
+  font-size: 0.76rem;
 }
 
-.progress-track {
+.rpm-code {
+  font-weight: 600;
+  color: var(--caliper-red);
+}
+
+.rpm-val {
+  font-family: var(--font-chassis);
+  font-weight: 800;
+  font-size: 1.5rem;
+}
+
+.rpm-track {
   width: 100%;
   height: 18px;
-  background: #e2e8f0;
-  border-radius: 999px;
-  overflow: hidden;
+  border: 2px solid var(--grease-black);
+  padding: 2px;
 }
 
-.progress-fill {
+.rpm-fill {
   height: 100%;
-  background: linear-gradient(90deg, #2563eb, #3b82f6);
-  transition: width 0.35s ease;
+  background-color: var(--caliper-red);
+  transition: width 0.3s ease;
 }
 
-/* 4. Abas */
-.tabs-header {
+/* 4. Abas (Caderno de Acerto) */
+.setup-tabs {
   display: flex;
-  border-bottom: 2px solid #e2e8f0;
-  gap: 0.25rem;
+  flex-direction: column;
+}
+
+.tabs-bar {
+  display: flex;
+  border-bottom: 2px solid var(--grease-black);
   overflow-x: auto;
 }
 
-.tab-btn {
-  padding: 0.65rem 1rem;
-  border: none;
+.tab-switch {
   background: transparent;
-  cursor: pointer;
+  border: none;
+  border-right: 2px solid var(--grease-black);
+  padding: 0.75rem 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
   font-weight: 600;
-  color: #64748b;
-  border-bottom: 2px solid transparent;
-  margin-bottom: -2px;
+  color: var(--grease-black);
+  cursor: pointer;
   white-space: nowrap;
 }
 
-.tab-btn.active {
-  color: #2563eb;
-  border-bottom-color: #2563eb;
+.tab-switch.is-selected {
+  background-color: var(--grease-black);
+  color: var(--manila-paper);
 }
 
-.tab-panel {
-  padding: 1rem 0 0.25rem;
+.tab-prefix {
+  color: var(--caliper-red);
 }
 
-.tab-panel h3 {
-  font-size: 1rem;
+.tab-content-box {
+  padding-top: 1.25rem;
+}
+
+.tab-spec-code {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--caliper-red);
   margin-bottom: 0.35rem;
 }
 
-.tab-panel p {
-  font-size: 0.9rem;
-  color: #475569;
+.tab-content-box h3 {
+  font-family: var(--font-chassis);
+  font-weight: 800;
+  font-size: 1.65rem;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
 }
 
-/* 5. Menu Suspenso */
-.dropdown {
+.tab-content-box p {
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+/* 5. Menu Suspenso (Scanner ECU) */
+.ecu-dropdown {
   position: relative;
-  display: inline-block;
+  width: 100%;
 }
 
-.dropdown-toggle {
+.ecu-trigger {
+  width: 100%;
+  background-color: var(--grease-black);
+  color: var(--manila-paper);
+  border: 2px solid var(--grease-black);
+  padding: 0.75rem 0.85rem;
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.6rem 1rem;
-  background: #0f172a;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
   cursor: pointer;
-  font-weight: 500;
 }
 
-.dropdown-menu {
+.ecu-tag {
+  color: var(--caliper-red);
+  font-weight: 600;
+  margin-right: 0.4rem;
+}
+
+.ecu-selected {
+  margin-right: auto;
+  text-align: left;
+}
+
+.ecu-list {
   position: absolute;
-  right: 0;
-  top: calc(100% + 6px);
-  background: #fff;
-  min-width: 220px;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  top: calc(100% - 2px);
+  left: 0;
+  width: 100%;
+  background-color: var(--manila-paper);
+  border: 2px solid var(--grease-black);
   list-style: none;
   z-index: 50;
-  overflow: hidden;
 }
 
-.dropdown-item {
+.ecu-option {
   width: 100%;
-  padding: 0.7rem 1rem;
+  background: transparent;
   border: none;
-  background: none;
-  text-align: left;
+  border-bottom: 2px solid var(--grease-black);
+  padding: 0.75rem 0.85rem;
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--grease-black);
   cursor: pointer;
-  font-size: 0.9rem;
-  color: #1e293b;
+  text-align: left;
 }
 
-.dropdown-item:hover {
-  background: #f1f5f9;
-  color: #2563eb;
+.ecu-list li:last-child .ecu-option {
+  border-bottom: none;
 }
 
-/* 6. Notificação Toast */
-.toast-container {
+.ecu-option:hover {
+  background-color: var(--grease-black);
+  color: var(--manila-paper);
+}
+
+.ecu-opt-code {
+  color: var(--caliper-red);
+  font-weight: 600;
+}
+
+/* 6. Notificações Toast (Alertas OBD) */
+.telemetry-toast-rack {
   position: fixed;
-  bottom: 1.25rem;
-  right: 1.25rem;
+  bottom: 1.5rem;
+  right: 1.5rem;
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
   z-index: 100;
-  max-width: 340px;
-  width: calc(100% - 2.5rem);
+  width: 370px;
 }
 
-.toast {
+.toast-unit {
+  background-color: var(--grease-black);
+  color: var(--manila-paper);
+  border: 2px solid var(--grease-black);
+  padding: 0.9rem 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.85rem 1rem;
-  border-radius: 8px;
-  color: #fff;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-  font-size: 0.9rem;
+  gap: 1rem;
 }
 
-.toast-success { background-color: #15803d; }
-.toast-error { background-color: #b91c1c; }
-.toast-info { background-color: #1d4ed8; }
+.toast-error {
+  border-left: 8px solid var(--caliper-red);
+}
 
-.toast-close {
+.toast-success {
+  border-left: 8px solid var(--manila-paper);
+}
+
+.toast-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.toast-tag {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--caliper-red);
+}
+
+.toast-msg {
+  font-size: 0.8rem;
+}
+
+.toast-close-btn {
   background: transparent;
-  border: none;
-  color: #fff;
-  font-size: 1.25rem;
+  border: 1px solid var(--manila-paper);
+  color: var(--manila-paper);
+  padding: 0.3rem 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
   cursor: pointer;
-  margin-left: 0.75rem;
-  line-height: 1;
+  white-space: nowrap;
 }
 
-/* Media Queries para Tablets e Smartphones */
+/* BREAKPOINT 1: Tablets (até 1024px) */
+@media (max-width: 1024px) {
+  .telemetry-sidebar {
+    grid-column: span 12;
+    position: static;
+    height: auto;
+    border-right: none;
+    border-bottom: 2px solid var(--grease-black);
+  }
+
+  .workbench-main {
+    grid-column: span 12;
+  }
+
+  .asymmetric-row {
+    grid-template-columns: repeat(12, 1fr);
+  }
+
+  .cell-5col,
+  .cell-3col {
+    grid-column: span 6;
+  }
+}
+
+/* BREAKPOINT 2: Smartphones e Tablets Verticais (até 768px) */
 @media (max-width: 768px) {
-  .app-grid {
+  .bay-photo-wrapper {
+    width: 100%;
+    height: 230px;
+  }
+
+  .spec-tag-overlap {
+    position: static;
+    width: 100%;
+    border-top: none;
+  }
+
+  .cell-5col,
+  .cell-3col {
+    grid-column: span 12;
+    border-right: none;
+  }
+
+  .cell-5col {
+    border-bottom: 2px solid var(--grease-black);
+  }
+
+  .os-row {
     grid-template-columns: 1fr;
+    gap: 0.35rem;
   }
 
-  .card-full {
-    grid-column: span 1;
+  .os-badge {
+    justify-self: start;
+  }
+}
+
+/* BREAKPOINT 3: Smartphones Compactos (até 480px) */
+@media (max-width: 480px) {
+  .telemetry-sidebar,
+  .engine-bay-hero,
+  .work-cell {
+    padding: 1.15rem;
   }
 
-  .app-header {
+  .garage-title {
+    font-size: 2.8rem;
+  }
+
+  .giant-num {
+    font-size: 2.6rem;
+  }
+
+  .service-pagination {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
+    gap: 0.6rem;
   }
 
-  .dropdown,
-  .dropdown-toggle {
-    width: 100%;
-    justify-content: space-between;
+  .page-numbers {
+    justify-content: center;
   }
 
-  .dropdown-menu {
-    width: 100%;
+  .telemetry-toast-rack {
+    left: 0.75rem;
+    right: 0.75rem;
+    bottom: 0.75rem;
+    width: auto;
   }
 }

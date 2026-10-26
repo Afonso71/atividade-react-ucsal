@@ -7,211 +7,283 @@ import Tabs from './components/Tabs';
 import Dropdown from './components/Dropdown';
 import './App.css';
 
-function DashboardContent() {
+function PitLogWorkshop() {
   const { addToast } = useToast();
 
-  // Estado para a Barra de Progresso
-  const [uploadProgress, setUploadProgress] = useState(40);
+  // Estado da Barra de Progresso (Carga no Dinamômetro)
+  const [dynoLoad, setDynoLoad] = useState(60);
 
-  // Estado e dados para a Paginação
+  // Estado e Dados da Paginação (Histórico de Ordens de Serviço)
   const [currentPage, setCurrentPage] = useState(1);
-  const allModules = [
-    { id: 1, name: 'Módulo 1: Fundamentos de Componentes e JSX', status: 'Concluído' },
-    { id: 2, name: 'Módulo 2: Gerenciamento de Props e Imutabilidade', status: 'Concluído' },
-    { id: 3, name: 'Módulo 3: Estado Local com Hook useState', status: 'Em andamento' },
-    { id: 4, name: 'Módulo 4: Ciclo de Vida e Hook useEffect', status: 'Em andamento' },
-    { id: 5, name: 'Módulo 5: Context API e Estado Global', status: 'Pendente' },
-    { id: 6, name: 'Módulo 6: Acessibilidade Web (ARIA) e Semântica', status: 'Pendente' },
-    { id: 7, name: 'Módulo 7: Responsividade e Layouts Fluidos', status: 'Pendente' },
-    { id: 8, name: 'Módulo 8: Deploy e Revisão de Código', status: 'Pendente' },
+  const serviceOrders = [
+    { id: 'OS-104', task: 'Troca de Óleo 5W30 Sintético e Filtro', km: '10.000 KM', status: 'CONCLUÍDO' },
+    { id: 'OS-108', task: 'Sangria de Freio com Fluido DOT 4 Racing', km: '15.200 KM', status: 'CONCLUÍDO' },
+    { id: 'OS-112', task: 'Alinhamento Técnico, Cambagem e Caster', km: '18.500 KM', status: 'CONCLUÍDO' },
+    { id: 'OS-119', task: 'Limpeza de Corpo de Borboleta (TBI) e Velas', km: '22.000 KM', status: 'EM BANCADA' },
+    { id: 'OS-124', task: 'Aferição de Pressão da Bomba de Combustível', km: '25.100 KM', status: 'EM BANCADA' },
+    { id: 'OS-129', task: 'Substituição de Buchas de Bandeja em PU', km: '28.000 KM', status: 'AGENDADO' },
+    { id: 'OS-133', task: 'Regulagem de Folga de Válvulas a Frio', km: '30.000 KM', status: 'AGENDADO' },
+    { id: 'OS-140', task: 'Mapeamento de Ignição no Dinamômetro de Rolo', km: '31.500 KM', status: 'FILA BOX' },
   ];
+
   const itemsPerPage = 2;
-  const totalPages = Math.ceil(allModules.length / itemsPerPage);
-  const currentItems = allModules.slice(
+  const totalPages = Math.ceil(serviceOrders.length / itemsPerPage);
+  const currentOrders = serviceOrders.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
 
-  // Dados para as Abas
-  const tabsData = [
+  // Dados das Abas (Especificações de Acerto)
+  const setupTabs = [
     {
-      id: 'visao-geral',
-      title: 'Visão Geral',
+      id: 'motor',
+      specCode: 'ENG-3C',
+      title: 'Motor e Alimentação',
       content:
-        'Este painel reúne os 6 componentes obrigatórios da atividade de Engenharia de Software da UCSal. Todos os componentes foram construídos de forma modular utilizando React Hooks e boas práticas de acessibilidade.',
+        'Taxa de compressão aferida nos cilindros sem variação superior a 2%. Mistura estequiométrica monitorada via sonda banda larga com alvo de lambda 0.86 em plena carga e temperatura de admissão controlada.',
     },
     {
-      id: 'arquitetura',
-      title: 'Arquitetura React',
+      id: 'suspensao',
+      specCode: 'SUSP-02',
+      title: 'Suspensão e Geometria',
       content:
-        'A aplicação utiliza useState para estados locais (abas, acordeão, paginação e progresso), useEffect para temporizadores e eventos de clique externo, e Context API para disparo global de notificações Toast.',
+        'Amortecedores recalibrados com carga de retorno 15% mais firme. Geometria dianteira acertada com -1.5 grau de cambagem negativa e 0.5mm de divergência (toe-out) para resposta imediata de entrada de curva.',
     },
     {
-      id: 'responsividade',
-      title: 'Responsividade',
+      id: 'freios',
+      specCode: 'BRK-04',
+      title: 'Freios e Arrefecimento',
       content:
-        'O layout utiliza CSS Grid e Flexbox com Media Queries para se adaptar automaticamente a telas de smartphones, tablets e desktops sem perda de usabilidade.',
+        'Discos dianteiros ventilados ranhurados com pastilhas de composto semimetálico. Linha pressurizada com ponto de ebulição seco de 270 graus Celsius, sem fadiga de pedal após ciclos repetidos.',
     },
   ];
 
-  // Dados para o Acordeão (FAQ)
-  const faqItems = [
+  // Dados do Acordeão (Manual de Torque e Procedimentos)
+  const workshopManual = [
     {
-      id: 1,
-      title: 'Como funciona o gerenciamento de estado neste projeto?',
+      id: 'proc-1',
+      title: 'Sequência de Aperto e Torque das Rodas',
       content:
-        'Cada componente controla seu próprio estado interno (como qual aba ou item do acordeão está aberto), enquanto dados compartilhados, como as notificações Toast, utilizam a Context API.',
+        'Aplicar aperto cruzado em três estágios utilizando torquímetro de estalo calibrado. Valor final fixado em 110 Nm com os prisioneiros secos, sem aplicação de graxa na rosca.',
     },
     {
-      id: 2,
-      title: 'Como o Menu Suspenso detecta cliques fora dele?',
+      id: 'proc-2',
+      title: 'Procedimento de Partida a Frio Após Revisão',
       content:
-        'Utilizamos o hook useRef para referenciar o container do menu no DOM e um event listener no useEffect que fecha o menu caso o clique ocorra fora dessa referência.',
+        'Antes de acionar a ignição, girar o motor sem centelha por 10 segundos para preencher a galeria de óleo e o filtro novo. Aguardar estabilização da pressão em marcha lenta antes de elevar o giro.',
     },
     {
-      id: 3,
-      title: 'A aplicação atende aos critérios de acessibilidade?',
+      id: 'proc-3',
+      title: 'Inspeção de Correias, Mangueiras e Coxins',
       content:
-        'Sim. Foram aplicadas tags semânticas do HTML5 (header, main, section, nav) e atributos ARIA como role="progressbar", role="tablist", role="alert" e aria-expanded.',
+        'Verificar presença de microfissuras nas bordas da correia de acessórios e folga axial nos coxins superiores do câmbio e motor. Qualquer vazamento de fluido hidráulico exige substituição imediata da peça.',
     },
   ];
 
-  // Opções para o Menu Suspenso
-  const dropdownOptions = [
+  // Opções do Menu Suspenso (Comandos da ECU)
+  const scannerOptions = [
     {
-      label: 'Filtrar: Todos os Módulos',
-      value: 'all',
-      onClick: () => addToast('Filtro alterado para: Todos os Módulos', 'info'),
+      label: 'Mapa 01: Uso Diário (Etanol/Gasolina)',
+      value: 'daily',
+      code: 'MAP-A',
+      onClick: () => addToast('Mapa de injeção 01 carregado na central.', 'info'),
     },
     {
-      label: 'Exportar Relatório PDF',
-      value: 'export',
-      onClick: () => addToast('Relatório exportado com sucesso!', 'success'),
+      label: 'Gravar Log de Telemetria OBD-II',
+      value: 'log',
+      code: 'REC-01',
+      onClick: () => addToast('Pacote de telemetria salvo com sucesso.', 'success'),
     },
     {
-      label: 'Sincronizar Servidor',
-      value: 'sync',
-      onClick: () => addToast('Falha de conexão ao sincronizar servidor.', 'error'),
+      label: 'Simular Corte de Giro (Redline)',
+      value: 'redline',
+      code: 'ERR-99',
+      onClick: () => addToast('Limite de rotação excedido: corte aos 6.800 RPM.', 'error'),
     },
   ];
 
-  const handleProgressChange = (newVal) => {
-    const clamped = Math.min(100, Math.max(0, newVal));
-    setUploadProgress(clamped);
+  const handleLoadChange = (newLoad) => {
+    const clamped = Math.min(100, Math.max(0, newLoad));
+    setDynoLoad(clamped);
     if (clamped === 100) {
-      addToast('Progresso da tarefa atingiu 100%!', 'success');
+      addToast('Plena carga atingida no rolo (100% TPS).', 'success');
     }
   };
 
-  const handlePageChange = (newPage) => {
+  const handlePageSelect = (newPage) => {
     setCurrentPage(newPage);
-    addToast(`Navegou para a página ${newPage}`, 'info');
+    addToast(`Exibindo folha 0${newPage} do livro de revisões.`, 'info');
   };
 
   return (
-    <div className="app-layout">
-      <header className="app-header">
-        <div>
-          <h1>UCSal DevPanel - Atividade React.js</h1>
-          <p>Demonstração prática de Componentes, Props, State e Context API</p>
+    <div className="workshop-grid">
+      {/* Coluna Esquerda Fixa: Telemetria e Comandos de Bancada (4 colunas) */}
+      <aside className="telemetry-sidebar">
+        <div className="garage-header">
+          <div className="serial-stamp">UCSAL // ENG. SOFTWARE // BOX-071</div>
+          <h1 className="garage-title">PITLOG OFICINA.</h1>
+          <p className="garage-desc">
+            Diário técnico de preparação mecânica, controle de dinamômetro e histórico de ordens de serviço.
+          </p>
         </div>
 
         {/* Componente 5: Menu Suspenso */}
-        <Dropdown label="Ações do Painel" options={dropdownOptions} />
-      </header>
-
-      <main className="app-grid">
-        {/* Componente 4: Abas */}
-        <section className="card">
-          <h2>1. Organização em Abas (Tabs)</h2>
-          <Tabs tabs={tabsData} />
-        </section>
+        <div className="bench-module">
+          <span className="module-label">01 // CENTRAL ELETRÔNICA (ECU)</span>
+          <Dropdown label="Selecionar Operação OBD" options={scannerOptions} />
+        </div>
 
         {/* Componente 3: Barra de Progresso */}
-        <section className="card">
-          <h2>2. Barra de Progresso (Progress Bar)</h2>
+        <div className="bench-module">
+          <span className="module-label">02 // CARGA DO DINAMÔMETRO</span>
           <ProgressBar
-            progress={uploadProgress}
-            label="Progresso de Conclusão do Semestre"
+            unitCode="DYNO-TPS"
+            label="Abertura de Borboleta / Carga"
+            progress={dynoLoad}
           />
-          <div className="button-group">
+          <div className="dyno-controls">
             <button
               type="button"
-              className="btn btn-secondary"
-              onClick={() => handleProgressChange(uploadProgress - 20)}
+              className="mech-btn"
+              onClick={() => handleLoadChange(dynoLoad - 20)}
             >
-              -20%
+              -20% CARGA
             </button>
             <button
               type="button"
-              className="btn btn-primary"
-              onClick={() => handleProgressChange(uploadProgress + 20)}
+              className="mech-btn"
+              onClick={() => handleLoadChange(dynoLoad + 20)}
             >
-              +20%
+              +20% CARGA
             </button>
             <button
               type="button"
-              className="btn btn-success"
-              onClick={() => handleProgressChange(100)}
+              className="mech-btn mech-btn-redline"
+              onClick={() => handleLoadChange(100)}
             >
-              Concluir (100%)
+              WOT [100%]
             </button>
+          </div>
+        </div>
+
+        <footer className="garage-footer">
+          <span>SALVADOR - BA</span>
+          <span>PRESSÃO ÓLEO: 4.2 BAR</span>
+        </footer>
+      </aside>
+
+      {/* Palco Direito Principal: Caderno de Oficina (8 colunas) */}
+      <main className="workbench-main">
+        {/* Bloco Visual Assimétrico com Sobreposição de Ficha Técnica */}
+        <section className="engine-bay-hero">
+          <div className="bay-photo-wrapper">
+            <img
+              src="https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?auto=format&fit=crop&w=1200&q=80"
+              alt="Cofre de motor mecânico aberto em bancada de oficina sob luz lateral"
+              className="bay-photo"
+            />
+          </div>
+
+          <div className="spec-tag-overlap">
+            <span className="tag-number">BOX 01</span>
+            <p className="tag-copy">
+              REGISTRO DE BANCADA: Fotografia 35mm Tri-X 400, luz lateral de galpão sobre cabeçote e linha de admissão pressurizada.
+            </p>
           </div>
         </section>
 
+        {/* Quebra Assimétrica: Abas (5 col) + Sensores Toast (3 col) */}
+        <div className="asymmetric-row">
+          {/* Componente 4: Abas */}
+          <section className="work-cell cell-5col">
+            <div className="cell-heading">
+              <span className="giant-num">03</span>
+              <div>
+                <span className="module-label">CADERNO DE ACERTO</span>
+                <h2>Parâmetros Mecânicos</h2>
+              </div>
+            </div>
+            <Tabs tabs={setupTabs} />
+          </section>
+
+          {/* Componente 6: Disparo de Notificações Toast via Context API */}
+          <section className="work-cell cell-3col">
+            <div className="cell-heading">
+              <span className="giant-num">04</span>
+              <div>
+                <span className="module-label">BARRAMENTO CAN-BUS</span>
+                <h2>Testar Sensores</h2>
+              </div>
+            </div>
+            <p className="sensor-intro">
+              Dispare leituras globais via Context API para simular alertas da injeção na tela:
+            </p>
+            <div className="sensor-triggers">
+              <button
+                type="button"
+                className="mech-btn"
+                onClick={() => addToast('Temperatura do líquido arrefecedor estabilizada em 90°C.', 'success')}
+              >
+                [OK] PRESSÃO E TEMPERATURA
+              </button>
+              <button
+                type="button"
+                className="mech-btn"
+                onClick={() => addToast('Sonda lambda realizando leitura de malha fechada.', 'info')}
+              >
+                [LOG] LEITURA DE SONDA
+              </button>
+              <button
+                type="button"
+                className="mech-btn mech-btn-redline"
+                onClick={() => addToast('Queda de pressão na linha de combustível principal.', 'error')}
+              >
+                [FALHA] ALERTA DE BOMBA
+              </button>
+            </div>
+          </section>
+        </div>
+
         {/* Componente 2: Paginação */}
-        <section className="card">
-          <h2>3. Listagem com Paginação (Pagination)</h2>
-          <ul className="module-list">
-            {currentItems.map((mod) => (
-              <li key={mod.id} className="module-item">
-                <span>{mod.name}</span>
-                <span className="badge">{mod.status}</span>
-              </li>
+        <section className="work-cell">
+          <div className="cell-heading">
+            <span className="giant-num">05</span>
+            <div>
+              <span className="module-label">HISTÓRICO DE MANUTENÇÃO</span>
+              <h2>Livro de Ordens de Serviço</h2>
+            </div>
+          </div>
+
+          <div className="os-table">
+            {currentOrders.map((order) => (
+              <article key={order.id} className="os-row">
+                <div className="os-code">{order.id}</div>
+                <div className="os-info">
+                  <h3>{order.task}</h3>
+                  <span>HODÔMETRO REGISTRADO: {order.km}</span>
+                </div>
+                <div className="os-badge">{order.status}</div>
+              </article>
             ))}
-          </ul>
+          </div>
+
           <Pagination
             totalPages={totalPages}
             currentPage={currentPage}
-            onPageChange={handlePageChange}
+            onPageChange={handlePageSelect}
           />
         </section>
 
-        {/* Componente 6: Controle direto de Notificação Toast */}
-        <section className="card">
-          <h2>4. Notificações Toast (Context API)</h2>
-          <p className="card-desc">
-            Dispare feedbacks temporários globais para testar os diferentes estados:
-          </p>
-          <div className="button-group">
-            <button
-              type="button"
-              className="btn btn-success"
-              onClick={() => addToast('Operação salva com sucesso!', 'success')}
-            >
-              Toast Sucesso
-            </button>
-            <button
-              type="button"
-              className="btn btn-danger"
-              onClick={() => addToast('Erro ao processar a requisição.', 'error')}
-            >
-              Toast Erro
-            </button>
-            <button
-              type="button"
-              className="btn btn-primary"
-              onClick={() => addToast('Nova atualização disponível no sistema.', 'info')}
-            >
-              Toast Info
-            </button>
-          </div>
-        </section>
-
         {/* Componente 1: Acordeão */}
-        <section className="card card-full">
-          <h2>5. Perguntas Frequentes (Accordion)</h2>
-          <Accordion items={faqItems} />
+        <section className="work-cell">
+          <div className="cell-heading">
+            <span className="giant-num">06</span>
+            <div>
+              <span className="module-label">MANUAL DE BANCADA</span>
+              <h2>Tabela de Torque e Procedimentos</h2>
+            </div>
+          </div>
+          <Accordion items={workshopManual} />
         </section>
       </main>
     </div>
@@ -221,7 +293,7 @@ function DashboardContent() {
 export default function App() {
   return (
     <ToastProvider>
-      <DashboardContent />
+      <PitLogWorkshop />
     </ToastProvider>
   );
 }

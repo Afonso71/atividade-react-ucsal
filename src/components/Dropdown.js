@@ -2,22 +2,22 @@ import React, { useState, useRef, useEffect } from 'react';
 
 export default function Dropdown({ label, options }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedLabel, setSelectedLabel] = useState(label);
-  const dropdownRef = useRef(null);
+  const [selectedText, setSelectedText] = useState(label);
+  const menuRef = useRef(null);
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+    const handleOutsideClick = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
         setIsOpen(false);
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener('mousedown', handleOutsideClick);
+    return () => document.removeEventListener('mousedown', handleOutsideClick);
   }, []);
 
-  const handleSelect = (option) => {
-    setSelectedLabel(option.label);
+  const handleSelectOption = (option) => {
+    setSelectedText(option.label);
     setIsOpen(false);
     if (option.onClick) {
       option.onClick(option);
@@ -25,29 +25,31 @@ export default function Dropdown({ label, options }) {
   };
 
   return (
-    <div className="dropdown" ref={dropdownRef}>
+    <div className="ecu-dropdown" ref={menuRef}>
       <button
         type="button"
-        className="dropdown-toggle"
+        className={`ecu-trigger ${isOpen ? 'is-open' : ''}`}
         onClick={() => setIsOpen((prev) => !prev)}
         aria-haspopup="true"
         aria-expanded={isOpen}
       >
-        <span>{selectedLabel}</span>
-        <span className="dropdown-arrow">{isOpen ? '▲' : '▼'}</span>
+        <span className="ecu-tag">SCANNER:</span>
+        <span className="ecu-selected">{selectedText}</span>
+        <span className="ecu-arrow">{isOpen ? '[-]' : '[+]'}</span>
       </button>
 
       {isOpen && (
-        <ul className="dropdown-menu" role="menu">
+        <ul className="ecu-list" role="menu">
           {options.map((option, index) => (
             <li key={option.value || index} role="none">
               <button
                 type="button"
                 role="menuitem"
-                className="dropdown-item"
-                onClick={() => handleSelect(option)}
+                className="ecu-option"
+                onClick={() => handleSelectOption(option)}
               >
-                {option.label}
+                <span>{option.label}</span>
+                <span className="ecu-opt-code">{option.code}</span>
               </button>
             </li>
           ))}

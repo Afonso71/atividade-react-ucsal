@@ -4,33 +4,37 @@ export default function Accordion({ items }) {
   const [openIndex, setOpenIndex] = useState(0);
 
   const handleToggle = (index) => {
-    setOpenIndex((prevIndex) => (prevIndex === index ? null : index));
+    setOpenIndex((prev) => (prev === index ? null : index));
   };
 
   return (
-    <div className="accordion">
+    <div className="torque-accordion">
       {items.map((item, index) => {
         const isOpen = openIndex === index;
+        const stepNum = String(index + 1).padStart(2, '0');
+
         return (
-          <div key={item.id || index} className="accordion-item">
+          <div key={item.id || index} className={`acc-item ${isOpen ? 'is-expanded' : ''}`}>
             <button
               type="button"
-              className={`accordion-header ${isOpen ? 'active' : ''}`}
+              className="acc-header"
               onClick={() => handleToggle(index)}
               aria-expanded={isOpen}
-              aria-controls={`accordion-panel-${index}`}
-              id={`accordion-btn-${index}`}
+              aria-controls={`acc-content-${index}`}
+              id={`acc-trigger-${index}`}
             >
-              <span>{item.title}</span>
-              <span className="accordion-icon">{isOpen ? '−' : '+'}</span>
+              <span className="acc-step">{stepNum}</span>
+              <span className="acc-title">{item.title}</span>
+              <span className="acc-state">{isOpen ? '[FECHAR -]' : '[ABRIR +]'}</span>
             </button>
+
             <div
-              id={`accordion-panel-${index}`}
+              id={`acc-content-${index}`}
               role="region"
-              aria-labelledby={`accordion-btn-${index}`}
-              className={`accordion-body ${isOpen ? 'open' : ''}`}
+              aria-labelledby={`acc-trigger-${index}`}
+              className="acc-panel"
             >
-              <div className="accordion-content">
+              <div className="acc-panel-inner">
                 <p>{item.content}</p>
               </div>
             </div>
